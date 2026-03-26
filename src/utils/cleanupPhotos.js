@@ -22,10 +22,12 @@ const getPublicId = (url) => {
 };
 
 const deleteYesterdayPhotos = async () => {
-  const today = new Date().toISOString().split('T')[0];
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 7);
+  const cutoffStr = cutoff.toISOString().split('T')[0];
   try {
     const oldPhotos = await FoodPhoto.findAll({
-      where: { date: { [Op.lt]: today } },
+      where: { date: { [Op.lt]: cutoffStr } },
     });
 
     if (oldPhotos.length === 0) {
@@ -43,10 +45,10 @@ const deleteYesterdayPhotos = async () => {
 
     // ลบจาก database
     const deleted = await FoodPhoto.destroy({
-      where: { date: { [Op.lt]: today } },
+      where: { date: { [Op.lt]: cutoffStr } },
     });
 
-    console.log(`[Cleanup] ลบรูปเก่า ${deleted} รูป (ก่อนวันที่ ${today})`);
+    console.log(`[Cleanup] ลบรูปเก่า ${deleted} รูป (เก่ากว่า 7 วัน ก่อน ${cutoffStr})`);
   } catch (err) {
     console.error('[Cleanup] เกิดข้อผิดพลาด:', err.message);
   }
