@@ -65,6 +65,7 @@ app.use('/api/meal-entries', mealEntryRoutes);
 app.use('/api/progress-logs', progressLogRoutes);
 app.use('/api/cardio-logs', cardioLogRoutes);
 app.use('/api/food-photos', require('./routes/foodPhoto.routes'));
+app.use('/api/food-analysis', require('./routes/foodAnalysis.routes'));
 
 // Health check
 app.get('/api/health', async (req, res) => {
