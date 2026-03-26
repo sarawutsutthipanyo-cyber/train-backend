@@ -29,6 +29,10 @@ const Exercise = sequelize.define(
       type: DataTypes.TEXT,
       defaultValue: '',
     },
+    youtubeUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     tableName: 'exercises',
