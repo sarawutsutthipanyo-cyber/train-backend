@@ -8,7 +8,7 @@ exports.uploadPhoto = async (req, res) => {
     // clientId comes from the logged-in user's clientProfile
     const client = await Client.findOne({ where: { userId: req.user.id } });
     if (!client) return res.status(404).json({ message: 'Client profile not found' });
-    const photoUrl = `/uploads/${req.file.filename}`;
+    const photoUrl = req.file.path || `/uploads/${req.file.filename}`;
     const photo = await FoodPhoto.create({
       clientId: client.id,
       mealType: mealType || 'other',

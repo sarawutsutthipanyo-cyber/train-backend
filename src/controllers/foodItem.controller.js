@@ -10,7 +10,7 @@ exports.search = async (req, res) => {
       { nameTh: { [Op.iLike]: `%${q}%` } },
     ];
     if (category) where.category = category;
-    const items = await FoodItem.findAll({ where, limit: 30, order: [['name', 'ASC']] });
+    const items = await FoodItem.findAll({ where, limit: 50, order: [['nameTh', 'ASC']] });
     res.json(items);
   } catch (err) { res.status(500).json({ message: err.message }); }
 };
