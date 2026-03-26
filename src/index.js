@@ -21,6 +21,8 @@ const mealEntryRoutes = require('./routes/mealEntry.routes');
 const progressLogRoutes = require('./routes/progressLog.routes');
 const cardioLogRoutes = require('./routes/cardioLog.routes');
 
+const { startCleanupJob } = require('./utils/cleanupPhotos');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -87,6 +89,8 @@ sequelize
       await User.create({ name: 'trainmic', email: 'trainmic@trainer.local', password: '1234', role: 'trainer' });
       console.log('Trainer account created: trainmic / 1234');
     }
+
+    startCleanupJob();
 
     const server = app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
